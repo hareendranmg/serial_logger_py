@@ -53,6 +53,8 @@ try:
             timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
             print(f"[{timestamp}] {data}")
             file.write(f"[{timestamp}] {data}\n")
+except UnicodeDecodeError:
+    continue
 except KeyboardInterrupt:
     print("\nExiting...")
     if file:
