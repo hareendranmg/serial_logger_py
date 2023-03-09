@@ -46,19 +46,20 @@ filename = datetime.datetime.now().strftime("data_%Y-%m-%d_%H-%M-%S.%f.txt")
 file = open(filename, "w")
 
 # Continuously read from serial port and write to file
-try:
-    while True:
+while True:
+    try:        
         data = ser.readline().decode().strip()
         if data:
             timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
             print(f"[{timestamp}] {data}")
             file.write(f"[{timestamp}] {data}\n")
-except UnicodeDecodeError:
-    continue
-except KeyboardInterrupt:
-    print("\nExiting...")
-    if file:
-        file.close()
-    if ser and ser.is_open:
-        ser.close()
-    sys.exit(0)
+    except UnicodeDecodeError:
+        print("Error occured when decoding data")
+        continue
+    except KeyboardInterrupt:
+        print("\nExiting...")
+        if file:
+            file.close()
+        if ser and ser.is_open:
+            ser.close()
+        sys.exit(0)
